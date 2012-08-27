@@ -102,8 +102,10 @@ i18n.__n = function () {
 
   if (parseInt(count, 10) > 1) {
     msg = vsprintf(msg.other, [count]);
-  } else {
+  } else if(parseInt(count, 10) === 1){
     msg = vsprintf(msg.one, [count]);
+  } else {
+      msg = vsprintf(msg.zero, [count]);
   }
 
   if (arguments.length > 3) {
