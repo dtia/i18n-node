@@ -1,7 +1,7 @@
 /**
  * @author      Created by Marcus Spiegel <marcus.spiegel@gmail.com> on 2011-03-25.
  * @link        https://github.com/mashpie/i18n-node
- * @license    http://creativecommons.org/licenses/by-sa/3.0/
+ * @license		  http://creativecommons.org/licenses/by-sa/3.0/
  *
  * @version     0.3.5
  */
@@ -94,22 +94,19 @@ i18n.__n = function () {
   if (this && this.scope) {
     locale = this.scope.locale;
   }
-  var zero = arguments[0];
-  var singular = arguments[1];
-  var plural = arguments[2];
-  var count = arguments[3];
-  var msg = translate(locale, singular, plural, zero);
+  var singular = arguments[0];
+  var plural = arguments[1];
+  var count = arguments[2];
+  var msg = translate(locale, singular, plural);
 
-  if (parseInt(count, 10) > 1) {
+  if (parseInt(count, 10) > 1 || parseInt(count, 10) === 0) {
     msg = vsprintf(msg.other, [count]);
-  } else if(parseInt(count, 10) === 1){
-    msg = vsprintf(msg.one, [count]);
   } else {
-    msg = vsprintf(msg.zero, [count]);
+    msg = vsprintf(msg.one, [count]);
   }
 
-  if (arguments.length > 4) {
-    msg = vsprintf(msg, Array.prototype.slice.call(arguments, 4));
+  if (arguments.length > 3) {
+    msg = vsprintf(msg, Array.prototype.slice.call(arguments, 3));
   }
 
   return msg;
@@ -206,7 +203,7 @@ function guessLanguage(request) {
 
 // read locale file, translate a msg and write to fs if new
 
-function translate(locale, singular, plural, zero) {
+function translate(locale, singular, plural) {
   if (locale === undefined) {
     if (debug) console.warn("WARN: No locale found - check the context of the call to $__. Using " + defaultLocale + " (set by request) as current locale");
     locale = defaultLocale;
@@ -215,18 +212,8 @@ function translate(locale, singular, plural, zero) {
   if (!locales[locale]) {
     read(locale);
   }
-  
-  if(zero) {
-      if(!locales[locale][zero]) {
-          locales[locale][zero] = {
-              'zero': zero,
-              'one': singular,
-              'other': plural
-          };
-          write(locale);
-      }
-      return locales[locale][zero];
-  } else if (plural) {
+
+  if (plural) {
     if (!locales[locale][singular]) {
       locales[locale][singular] = {
         'one': singular,
@@ -234,7 +221,6 @@ function translate(locale, singular, plural, zero) {
       };
       write(locale);
     }
-    return locales[locale][plural];
   }
 
   if (!locales[locale][singular]) {
