@@ -94,11 +94,11 @@ i18n.__n = function () {
   if (this && this.scope) {
     locale = this.scope.locale;
   }
-  var zero = arguments[0]
+  var zero = arguments[0];
   var singular = arguments[1];
   var plural = arguments[2];
   var count = arguments[3];
-  var msg = translate(locale, singular, plural);
+  var msg = translate(locale, singular, plural, zero);
 
   if (parseInt(count, 10) > 1) {
     msg = vsprintf(msg.other, [count]);
