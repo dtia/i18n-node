@@ -94,9 +94,10 @@ i18n.__n = function () {
   if (this && this.scope) {
     locale = this.scope.locale;
   }
-  var singular = arguments[0];
-  var plural = arguments[1];
-  var count = arguments[2];
+  var zero = arguments[0]
+  var singular = arguments[1];
+  var plural = arguments[2];
+  var count = arguments[3];
   var msg = translate(locale, singular, plural);
 
   if (parseInt(count, 10) > 1) {
@@ -203,7 +204,7 @@ function guessLanguage(request) {
 
 // read locale file, translate a msg and write to fs if new
 
-function translate(locale, singular, plural) {
+function translate(locale, singular, plural, zero) {
   if (locale === undefined) {
     if (debug) console.warn("WARN: No locale found - check the context of the call to $__. Using " + defaultLocale + " (set by request) as current locale");
     locale = defaultLocale;
@@ -212,8 +213,17 @@ function translate(locale, singular, plural) {
   if (!locales[locale]) {
     read(locale);
   }
-
-  if (plural) {
+  
+  if(zero) {
+      if(!locales[locale][zero]) {
+          locales[locale][zero] = {
+              'zero': zero,
+              'one': singular,
+              'other': plural
+          };
+          write(locale);
+      }
+  } else if (plural) {
     if (!locales[locale][singular]) {
       locales[locale][singular] = {
         'one': singular,
