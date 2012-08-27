@@ -1,7 +1,7 @@
 /**
  * @author      Created by Marcus Spiegel <marcus.spiegel@gmail.com> on 2011-03-25.
  * @link        https://github.com/mashpie/i18n-node
- * @license		  http://creativecommons.org/licenses/by-sa/3.0/
+ * @license    http://creativecommons.org/licenses/by-sa/3.0/
  *
  * @version     0.3.5
  */
@@ -105,11 +105,11 @@ i18n.__n = function () {
   } else if(parseInt(count, 10) === 1){
     msg = vsprintf(msg.one, [count]);
   } else {
-      msg = vsprintf(msg.zero, [count]);
+    msg = vsprintf(msg.zero, [count]);
   }
 
-  if (arguments.length > 3) {
-    msg = vsprintf(msg, Array.prototype.slice.call(arguments, 3));
+  if (arguments.length > 4) {
+    msg = vsprintf(msg, Array.prototype.slice.call(arguments, 4));
   }
 
   return msg;
@@ -225,6 +225,7 @@ function translate(locale, singular, plural, zero) {
           };
           write(locale);
       }
+      return locales[locale][zero];
   } else if (plural) {
     if (!locales[locale][singular]) {
       locales[locale][singular] = {
@@ -233,6 +234,7 @@ function translate(locale, singular, plural, zero) {
       };
       write(locale);
     }
+    return locales[locale][plural];
   }
 
   if (!locales[locale][singular]) {
