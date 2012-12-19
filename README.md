@@ -1,7 +1,6 @@
 #Forked
-<pre>
 Forked to support singular, plural, AND zero items:
-
+<pre>
 /**
  * @params zero - string for zero items
  * @params singular - string for 1 item
@@ -12,7 +11,8 @@ Forked to support singular, plural, AND zero items:
 __n(zero, singular, plural, num_items);
 </pre>
 <br>
-============================================================
+
+-------------------------------------------------------------------------
 
 # i18n
 
