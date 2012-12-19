@@ -1,3 +1,19 @@
+#Forked
+<pre>
+Forked to support singular, plural, AND zero items:
+
+/**
+ * @params zero - string for zero items
+ * @params singular - string for 1 item
+ * @params plural - string for n items
+ * @params num_items - the value, i.e. the number of items
+ *
+ */
+__n(zero, singular, plural, num_items);
+</pre>
+<br>
+============================================================
+
 # i18n
 
 Lightweight simple translation module with dynamic json storage. 
